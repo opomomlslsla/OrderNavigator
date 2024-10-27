@@ -15,6 +15,17 @@
 В appsettingsjson можно указать параметры для логгирования (по умолчанию логгировние происходит в бд в таблицу Logs).
 
 Инструкция по запуску:
+Перед первым запуском программы следует законментировать строки:<br>
+builder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+затем создать базу данных с помощью команды update-database в консоли диспетчера пакетов
+<br>
+![изображение](https://github.com/user-attachments/assets/563df558-f162"-4656-844a-6788ebe97883)
+<br>
+поставив в проект по умолчанию Infrastructure <br>
+![изображение](https://github.com/user-attachments/assets/29878cb6-dbd3-43e5-94a0-d6cc6e220354)
+<br>
+после можно все раскоментировать и запускать приложение.
+
 Для того чтобы запустить проект с помощью .net CLI вам нужно установить .net sdk(если у вас его нет), найти .net sdk можно на официальном сайте майкрософт. 
 https://dotnet.microsoft.com/en-us/download - ссылка на скачивание .net sdk.
 после установки вам нужно открыть командную строку и набрать следующие команды:<br>
@@ -23,12 +34,3 @@ dotnet build <br>
 dotnet run <br>
 
 Для того чтобы запустить программу в visual studio вам нужно открыть решение в visual studio и запустить отладку.
-ВНИМАНИЕ!
-При первом запуске программы следует законментировать строки:<br>
-builder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
-<br>
-using (var scope = app.Services.CreateScope())<br>
-    DataSeeder.Seed(scope.ServiceProvider.GetService<Context>());
-<br>
-При первом запуске программы создается база данных и могут возникнуть ошибки с классом Dataseeder и Логгированием(т.к серилог создает таблицу Logs а для этого надо чтобы сама база данных была уже создана).
-Следует законментировать эти строки перед запуском, или созданием базы данных если вы создаете её с помощью команды update-databse в консоли диспетчера пакетов(в visual studio)
