@@ -27,7 +27,7 @@ dotnet run <br>
 При первом запуске программы следует законментировать строки:<br>
 builder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 <br>
-using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())<br>
     DataSeeder.Seed(scope.ServiceProvider.GetService<Context>());
 <br>
 При первом запуске программы создается база данных и могут возникнуть ошибки с классом Dataseeder и Логгированием(т.к серилог создает таблицу Logs а для этого надо чтобы сама база данных была уже создана).
