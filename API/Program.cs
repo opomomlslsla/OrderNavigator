@@ -26,15 +26,14 @@ builder.Host.UseSerilog((context, services, configuration) => configuration.Read
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
-{
     DataSeeder.Seed(scope.ServiceProvider.GetService<Context>());
-}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//app.UseMiddleware<ExeptionHandler>();
+app.UseMiddleware<ExeptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

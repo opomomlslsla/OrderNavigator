@@ -38,7 +38,7 @@ public class ExeptionHandler(RequestDelegate requestDelegate, ILogger logger)
         catch (Exception ex)
         {
             _logger.Error($"{ex.Message} \n {ex.InnerException} \n {ex.StackTrace} \n");
-            string msg = "Internal server error";
+            string msg = $"Internal server error ";
             await HandleExeptionAsync(httpContext, msg, HttpStatusCode.InternalServerError);
 
         }

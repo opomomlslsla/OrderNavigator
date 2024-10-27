@@ -17,7 +17,7 @@ public class OrderController(OrderProcessor orderProcessor, ILogger<OrderControl
     {
         _validator.ValidateAndThrow(request);
         var res = await _orderProcessor.GetByTimeStampAsync(request);
-        _logger.LogInformation("Controller method GetFilteredORders executed sucsessfully");
+        _logger.LogInformation("Controller method \"Filter\" executed sucsessfully");
         return Ok(res);
     }
 }

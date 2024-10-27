@@ -1,5 +1,4 @@
-﻿using System.Runtime;
-namespace Aplication.Services.Options;
+﻿namespace Aplication.Services.Options;
 
 public class StorageOptions
 {
