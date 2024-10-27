@@ -18,10 +18,12 @@ public class FilterResult : BaseEntity
         sb.AppendLine($"District: {District}");
         sb.AppendLine($"StartTIme: {StartTime}");
         sb.AppendLine($"EndTime: {EndTime}");
+        sb.AppendLine("Orders: \n{");
         foreach (var item in ResultData)
         {
-            sb.AppendLine(item.ToString());
+            sb.AppendLine("    " + item.ToString());
         }
+        sb.AppendLine("}");
         return sb.ToString();
     }
 }
