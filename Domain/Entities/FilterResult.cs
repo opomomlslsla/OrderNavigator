@@ -12,16 +12,16 @@ public class FilterResult : BaseEntity
     [NotMapped]
     public List<OrderData> ResultData { get; set; }
 
-    //public override string ToString()
-    //{
-    //    var sb = new StringBuilder();
-    //    sb.AppendLine($"District: {District}");
-    //    sb.AppendLine($"StartTIme: {StartTime}");
-    //    sb.AppendLine($"EndTime: {EndTime}");
-    //    foreach( var item in ResultData )
-    //    {
-    //        sb.AppendLine(item.ToString());
-    //    }
-    //    return sb.ToString();
-    //}
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine($"District: {District}");
+        sb.AppendLine($"StartTIme: {StartTime}");
+        sb.AppendLine($"EndTime: {EndTime}");
+        foreach (var item in ResultData)
+        {
+            sb.AppendLine(item.ToString());
+        }
+        return sb.ToString();
+    }
 }

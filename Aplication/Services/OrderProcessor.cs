@@ -16,12 +16,13 @@ public class OrderProcessor(IOptions<StorageOptions> options, IRepository<Distri
     private readonly IRepository<District> _districtRepository = districtRepository;
     private readonly IRepository<Order> _orderRepository = orderRepository;
     private readonly IRepository<FilterResult> _FilterResultRepository= filterResultRepo;
-    public async Task<ICollection<Order>> GetByTimeStampAsync(OrderFilterRequest request)
+    public async Task<OrderFIlterRequestResult> GetByTimeStampAsync(OrderFilterRequest request)
     {
         var district = await _districtRepository.GetOneByAsync(x => x.Name == request.DistrictName);
         if (district == null) { throw new ArgumentException("District not found"); }
-        var result = await _orderRepository.GetByAsync(x => x.DeliveryDistrict.Name == district.Name && x.DeliveryDate > request.StartTime && x.DeliveryDate < request.EndTime);
-        await SaveResultAsync(result, request.StartTime, request.EndTime, district);
+        var orders = await _orderRepository.GetByAsync(x => x.DeliveryDistrict.Name == district.Name && x.DeliveryDate > request.StartTime && x.DeliveryDate < request.EndTime);
+        await SaveResultAsync(orders, request.StartTime, request.EndTime, district);
+        var result  = new OrderFIlterRequestResult() { StartTime = request.StartTime, EndTime = request.EndTime, Orders = orders.Adapt<List<OrderData>>(), District = district };
         return result;
     }
 
