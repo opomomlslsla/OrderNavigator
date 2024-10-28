@@ -3,20 +3,22 @@ using Aplication.Services.Options;
 using Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace Aplication.Factories;
 
-public class DataSaverFactory(IOptions<StorageOptions> options, IServiceProvider serviceProvider) : IDataSaverFactory
+public class DataSaverFactory(IOptions<StorageOptions> options, IEnumerable<IDataSaver> dataSavers) : IDataSaverFactory
 {
     private readonly StorageOptions _options = options.Value;
-
+    private readonly IEnumerable<IDataSaver> _dataSavers = dataSavers;
     public ICollection<IDataSaver> GetDataSavers()
     {
-        var savers = new List<IDataSaver>();
+        var savers = new List<IDataSaver?>();
         if (_options.UseDatabase)
-            savers.Add(serviceProvider.GetRequiredService<DbDataSaver>());
+            savers.Add(_dataSavers.SingleOrDefault(s => s is DbDataSaver));
+
         if (_options.UseFile)
-            savers.Add(serviceProvider.GetRequiredService<FileDataSaver>());
+            savers.Add(_dataSavers.SingleOrDefault(s => s is FileDataSaver));
         return savers;
     }
 

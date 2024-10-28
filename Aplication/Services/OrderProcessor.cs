@@ -15,8 +15,7 @@ public class OrderProcessor(IDataSaverFactory factory, IRepository<District> dis
     private readonly IRepository<Order> _orderRepository = orderRepository;
     public async Task<OrderFIlterRequestResult> ProceccOrders(OrderFilterRequest requestData)
     {
-        var district = await _districtRepository.GetOneByAsync(x => x.Name == requestData.DistrictName);
-        if (district == null) { throw new ArgumentException("District not found"); }
+        var district = await _districtRepository.GetOneByAsync(x => x.Name == requestData.DistrictName) ?? throw new ArgumentException("District not found");
         var orders = await _orderRepository.GetByAsync(x => x.DeliveryDistrict.Name == district.Name && x.DeliveryDate > requestData.StartTime && x.DeliveryDate < requestData.EndTime);
         var result = new OrderFIlterRequestResult() { StartTime = requestData.StartTime, EndTime = requestData.EndTime, Orders = orders.Adapt<List<OrderData>>(), District = district };
         await SaveFilteredDataAsync(orders, requestData.StartTime, requestData.EndTime, district);
