@@ -1,4 +1,6 @@
 using Aplication.DTO;
+using Aplication.Factories;
+using Aplication.Helpers;
 using Aplication.Services;
 using Aplication.Services.Options;
 using Aplication.Validators;
@@ -12,19 +14,30 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllers();
-builder.Services.AddDbContext<Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+builder.Services.AddDbContext<Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<StorageOptions>(builder.Configuration.GetSection("StorageOptions"));
+
 builder.Services.AddScoped<IRepository<FilterResult>, FilterResultRepository>();
-builder.Services.AddScoped<IRepository<District>,DistrictRepository>();
+builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
+
+builder.Services.AddScoped<DbDataSaver>();
+builder.Services.AddScoped<FileDataSaver>(provider =>
+    new FileDataSaver(builder.Configuration.GetValue<string>("FilePath")));
+
+builder.Services.AddScoped<IDataSaverFactory, DataSaverFactory>();
 builder.Services.AddScoped<OrderProcessor>();
 builder.Services.AddScoped<IValidator<OrderFilterRequest>, OrderFilterRequestValidator>();
-builder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
-var app = builder.Build();
 
+builder.Host.UseSerilog((context, services, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+var app = builder.Build();
 using (var scope = app.Services.CreateScope())
     DataSeeder.Seed(scope.ServiceProvider.GetService<Context>());
 

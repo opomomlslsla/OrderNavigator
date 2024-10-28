@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Entities;
+using Domain.Interfaces;
+using Domain.ValueObjects;
+using Mapster;
 
-namespace Aplication.Helpers
+namespace Aplication.Helpers;
+
+public class DbDataSaver(IRepository<FilterResult> filterRepository) : IDataSaver
 {
-    internal class DbDataSaver
+    private readonly IRepository<FilterResult> _filterRepository = filterRepository;
+    public async Task SaveAsync(ICollection<Order> orders, DateTime start, DateTime end, District district)
     {
+        var filterResult = new FilterResult() { StartTime = start, EndTime = end, ResultData = orders.Adapt<List<OrderData>>(), District = district };
+        await _filterRepository.AddAsync(filterResult);
+        await _filterRepository.SaveChangesAsync();
     }
 }

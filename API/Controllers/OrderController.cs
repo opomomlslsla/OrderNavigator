@@ -13,10 +13,10 @@ public class OrderController(OrderProcessor orderProcessor, ILogger<OrderControl
     private readonly OrderProcessor _orderProcessor = orderProcessor;
     private readonly IValidator<OrderFilterRequest> _validator = validator;
     [HttpPost("Filter")]
-    public async Task<IActionResult> GetFilteredORders(OrderFilterRequest request)
+    public async Task<IActionResult> GetFilteredORders(OrderFilterRequest requestData)
     {
-        _validator.ValidateAndThrow(request);
-        var res = await _orderProcessor.GetByTimeStampAsync(request);
+        _validator.ValidateAndThrow(requestData);
+        var res = await _orderProcessor.ProceccOrders(requestData);
         _logger.LogInformation("Controller method \"Filter\" executed sucsessfully");
         return Ok(res);
     }
