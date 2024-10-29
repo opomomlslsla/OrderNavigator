@@ -20,7 +20,7 @@ public class ExeptionHandler(RequestDelegate requestDelegate, ILogger logger)
         catch(ValidationException ex)
         {
             _logger.Information(ex.Message);
-            string msg = "Введенные данные некорректны";
+            string msg = "Entered data is incorrect";
             await HandleExeptionAsync(httpContext, msg, HttpStatusCode.BadRequest);
         }
         catch (ArgumentException ex)

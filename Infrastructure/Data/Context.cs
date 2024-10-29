@@ -3,8 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
 
-public sealed class Context(DbContextOptions<Context> options) : DbContext(options)
+public sealed class Context : DbContext
 {
+    public Context(DbContextOptions<Context> options) : base(options)
+    {
+        Database.EnsureDeleted();
+    }
     public DbSet<District> Districts { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<FilterResult> FilterResults { get; set; }
