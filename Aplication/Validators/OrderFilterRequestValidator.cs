@@ -7,9 +7,10 @@ public class OrderFilterRequestValidator : AbstractValidator<OrderFilterRequest>
     public OrderFilterRequestValidator()
     {
         RuleFor(x => x.StartTime).NotEmpty();
-        RuleFor(x => x.StartTime).NotEmpty();
-        RuleFor(x => x.EndTime).GreaterThan(x => x.StartTime).LessThan(DateTime.Now);
-        RuleFor(x => x.DistrictName).MaximumLength(50);
-        RuleFor(x => x.DistrictName).NotEmpty();
+        RuleFor(x => x.EndTime).NotEmpty()
+            .GreaterThan(x => x.StartTime)
+            .LessThan(DateTime.Now);
+        RuleFor(x => x.DistrictName).NotEmpty()
+            .MaximumLength(50);
     }
 }

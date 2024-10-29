@@ -11,6 +11,6 @@ public interface IRepository<T> where T : BaseEntity
     Task<ICollection<T>> GetAllAsync();
     Task<ICollection<T>> GetByAsync(Expression<Func<T, bool>> predicate);
     Task<T?> GetByIdAsync(Guid id);
-    Task<T?> GetOneByAsync(Expression<Func<T, bool>> predicate);
+    Task<T?> GetFirstByAsync(Expression<Func<T, bool>> predicate);
     Task SaveChangesAsync();
 }

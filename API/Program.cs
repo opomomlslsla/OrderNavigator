@@ -31,7 +31,7 @@ builder.Services.AddScoped<IDataSaver,FileDataSaver>(provider =>
     new FileDataSaver(builder.Configuration.GetValue<string>("FilePath")));
 
 builder.Services.AddScoped<IDataSaverFactory, DataSaverFactory>();
-builder.Services.AddScoped<OrderProcessor>();
+builder.Services.AddScoped<OrderFiltrator>();
 builder.Services.AddScoped<IValidator<OrderFilterRequest>, OrderFilterRequestValidator>();
 
 builder.Host.UseSerilog((context, services, configuration) =>

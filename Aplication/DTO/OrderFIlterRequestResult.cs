@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Aplication.DTO;
 
-public class OrderFIlterRequestResult
+public class OrderFilterRequestResult
 {
     public District District { get; set; }
     public DateTime StartTime { get; set; }

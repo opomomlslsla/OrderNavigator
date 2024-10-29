@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories.Common
             return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public virtual async Task<T?> GetOneByAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T?> GetFirstByAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
