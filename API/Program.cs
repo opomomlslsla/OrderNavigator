@@ -27,9 +27,7 @@ builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
 builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 
 builder.Services.AddScoped<IDataSaver,DbDataSaver>();
-builder.Services.AddScoped<IDataSaver,FileDataSaver>(provider =>
-    new FileDataSaver(builder.Configuration.GetValue<string>("FilePath")));
-
+builder.Services.AddScoped<IDataSaver, FileDataSaver>();
 builder.Services.AddScoped<IDataSaverFactory, DataSaverFactory>();
 builder.Services.AddScoped<OrderFiltrator>();
 builder.Services.AddScoped<IValidator<OrderFilterRequest>, OrderFilterRequestValidator>();

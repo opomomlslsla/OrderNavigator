@@ -16,7 +16,6 @@ public class DataSaverFactory(IOptions<StorageOptions> options, IEnumerable<IDat
         var savers = new List<IDataSaver?>();
         if (_options.UseDatabase)
             savers.Add(_dataSavers.SingleOrDefault(s => s is DbDataSaver));
-
         if (_options.UseFile)
             savers.Add(_dataSavers.SingleOrDefault(s => s is FileDataSaver));
         return savers;
