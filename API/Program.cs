@@ -11,6 +11,7 @@ using Infrastructure.Data;
 using Infrastructure.Middleware;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Quartz;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,8 +30,14 @@ builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 builder.Services.AddScoped<IDataSaver,DbDataSaver>();
 builder.Services.AddScoped<IDataSaver, FileDataSaver>();
 builder.Services.AddScoped<IDataSaverFactory, DataSaverFactory>();
-builder.Services.AddScoped<OrderFiltrator>();
 builder.Services.AddScoped<IValidator<OrderFilterRequest>, OrderFilterRequestValidator>();
+
+builder.Services.AddQuartz(options =>
+{
+    options.UseMicrosoftDependencyInjectionJobFactory();
+});
+builder.Services.AddQuartzHostedService( q => q.WaitForJobsToComplete = true);
+builder.Services.AddScoped<OrderScheduler>();
 
 builder.Host.UseSerilog((context, services, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
