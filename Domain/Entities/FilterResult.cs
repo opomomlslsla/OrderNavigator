@@ -10,7 +10,7 @@ public class FilterResult : BaseEntity
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
     [NotMapped]
-    public List<OrderData> ResultData { get; set; }
+    public List<OrderData> ResultData { get; set; } = [];
 
     public override string ToString()
     {

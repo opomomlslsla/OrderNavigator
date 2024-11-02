@@ -14,10 +14,6 @@ public sealed class Context(DbContextOptions<Context> options) : DbContext(optio
 
         modelBuilder.Entity<FilterResult>().OwnsMany(
             d => d.ResultData,
-            builder =>
-            {
-                builder.ToJson();
-            }
-            );
+            builder => { builder.ToJson(); });
     }
 }

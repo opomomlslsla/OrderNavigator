@@ -32,10 +32,7 @@ builder.Services.AddScoped<IDataSaver, FileDataSaver>();
 builder.Services.AddScoped<IDataSaverFactory, DataSaverFactory>();
 builder.Services.AddScoped<IValidator<OrderFilterRequest>, OrderFilterRequestValidator>();
 
-builder.Services.AddQuartz(options =>
-{
-    options.UseMicrosoftDependencyInjectionJobFactory();
-});
+builder.Services.AddQuartz();
 builder.Services.AddScoped<OrderScheduler>();
 builder.Services.AddQuartzHostedService( q => q.WaitForJobsToComplete = true);
 
@@ -51,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseMiddleware<ExeptionHandler>();
+app.UseMiddleware<ExceptionHandler>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

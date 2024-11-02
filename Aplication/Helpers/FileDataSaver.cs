@@ -14,10 +14,13 @@ public class FileDataSaver(IOptions<StorageOptions> options) : IDataSaver
     public async Task SaveAsync(ICollection<Order> orders, DateTime start, DateTime end, District district)
     {
         var storageFile = $"{_filepath}\\Result_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.txt";
-        var filterResult = new FilterResult() { StartTime = start, EndTime = end, ResultData = orders.Adapt<List<OrderData>>(), District = district };
-        using (StreamWriter writer = new StreamWriter(storageFile, true, Encoding.UTF8))
+        var filterResult = new FilterResult() 
         {
-            await writer.WriteLineAsync(filterResult.ToString());
-        }
+            StartTime = start, EndTime = end, 
+            ResultData = orders.Adapt<List<OrderData>>(), 
+            District = district 
+        };
+        await using var writer = new StreamWriter(storageFile, true, Encoding.UTF8);
+        await writer.WriteLineAsync(filterResult.ToString());
     }
 }

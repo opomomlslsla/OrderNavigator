@@ -6,7 +6,6 @@ namespace Aplication.Services;
 
 public class OrderScheduler(ISchedulerFactory factory)
 {
-    private readonly ISchedulerFactory _factory = factory;
     public async Task ScheduleOrderFilterJob(OrderFilterRequest filterRequestData)
     {
         var jobId = Guid.NewGuid().ToString();
@@ -18,7 +17,7 @@ public class OrderScheduler(ISchedulerFactory factory)
         ITrigger trigger = TriggerBuilder.Create()
             .StartNow()
             .Build();
-        var scheduler = await _factory.GetScheduler();
+        var scheduler = await factory.GetScheduler();
         await scheduler.Start();
         await scheduler.ScheduleJob(job, trigger);
 

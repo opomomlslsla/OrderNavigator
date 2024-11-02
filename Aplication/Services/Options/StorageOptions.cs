@@ -4,5 +4,5 @@ public class StorageOptions
 {
     public bool UseDatabase { get; set; }
     public bool UseFile { get; set; }
-    public string FilePath { get; set; }
+    public string FilePath { get; set; } = null!;
 }

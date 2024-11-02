@@ -12,37 +12,33 @@ public class OrderFilterJob(
     IRepository<Order> orderRepository,
     ILogger<OrderFilterJob> logger) : IJob
 {
-    private readonly IDataSaverFactory _dataSaverFactory = factory;
-    private readonly IRepository<District> _districtRepository = districtRepository;
-    private readonly IRepository<Order> _orderRepository = orderRepository;
-    private readonly ILogger<OrderFilterJob> _logger = logger;
-    public async Task FilterOrders(OrderFilterRequest requestData)
-    {
-        var district = await _districtRepository.GetFirstByAsync(x => x.Name == requestData.DistrictName);
-        if (district == null)
-        {
-            _logger.LogInformation("District not found");
-            return;
-        }
-        var orders = await _orderRepository.GetByAsync(x =>
-                           x.DeliveryDistrict.Name == district.Name
-                           && x.DeliveryDate > requestData.StartTime
-                           && x.DeliveryDate < requestData.EndTime);
-        await SaveFilteredDataAsync(orders, requestData.StartTime, requestData.EndTime, district);
-    }
-    private async Task SaveFilteredDataAsync(ICollection<Order> orders, DateTime start, DateTime end, District district)
-    {
-        var factories = _dataSaverFactory.GetDataSavers();
-        foreach (var item in factories)
-        {
-            await item.SaveAsync(orders, start, end, district);
-        }
-    }
     public async Task Execute(IJobExecutionContext context)
     {
         JobDataMap datamap = context.JobDetail.JobDataMap;
-        var data = (OrderFilterRequest) datamap.Get("data");
+        var data = (OrderFilterRequest)datamap.Get("data");
         await FilterOrders(data);
-        _logger.LogInformation("Orders Filtered succesfully");
+        logger.LogInformation("Orders Filtered succesfully");
+    }
+    private async Task FilterOrders(OrderFilterRequest orderFilter)
+    {
+        var district = await districtRepository.GetFirstByAsync(x => x.Name == orderFilter.DistrictName);
+        if (district == null)
+        {
+            logger.LogInformation($"District {district.Name} not found");
+            return;
+        }
+        var orders = await orderRepository.GetByAsync(order =>
+                           order.DeliveryDistrict.Name == district.Name
+                           && order.DeliveryDate > orderFilter.StartTime
+                           && order.DeliveryDate < orderFilter.EndTime);
+        await SaveFilteredDataAsync(orders, orderFilter.StartTime, orderFilter.EndTime, district);
+    }
+    private async Task SaveFilteredDataAsync(ICollection<Order> orders, DateTime start, DateTime end, District district)
+    {
+        var dataSavers = factory.GetDataSavers();
+        foreach (var sasver in dataSavers)
+        {
+            await sasver.SaveAsync(orders, start, end, district);
+        }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Infrastructure.Data;
 
-public class DataSeeder()
+public static class DataSeeder
 {
-    public static void Seed(Context context)
+    public static void Seed(Context? context)
     {
         var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
         if (context != null && !context.Orders.Any())
@@ -84,7 +84,6 @@ public class DataSeeder()
             });
             context.SaveChanges();
         }
-
     }
 }
 

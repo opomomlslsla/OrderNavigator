@@ -4,7 +4,4 @@ using Infrastructure.Repositories.Common;
 
 namespace Infrastructure.Repositories;
 
-public class OrderRepository(Context context) : BaseRepository<Order>(context)
-{
-
-}
+public class OrderRepository(Context context) : BaseRepository<Order>(context);
