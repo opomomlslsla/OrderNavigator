@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{2F252A6A-5A4E-42C7-AE2C-B708368D5F92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aplication", "Aplication\Aplication.csproj", "{DE3326A5-EE05-49C5-8AEA-B22D2A8A6182}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Aplication\Application.csproj", "{DE3326A5-EE05-49C5-8AEA-B22D2A8A6182}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{DBABAA72-5FB6-47D9-8FA8-5A18F2C0AFC2}"
 EndProject
