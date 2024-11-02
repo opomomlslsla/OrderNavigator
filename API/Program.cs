@@ -36,8 +36,8 @@ builder.Services.AddQuartz(options =>
 {
     options.UseMicrosoftDependencyInjectionJobFactory();
 });
-builder.Services.AddQuartzHostedService( q => q.WaitForJobsToComplete = true);
 builder.Services.AddScoped<OrderScheduler>();
+builder.Services.AddQuartzHostedService( q => q.WaitForJobsToComplete = true);
 
 builder.Host.UseSerilog((context, services, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));

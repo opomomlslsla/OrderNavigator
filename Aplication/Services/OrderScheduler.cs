@@ -19,6 +19,8 @@ public class OrderScheduler(ISchedulerFactory factory)
             .StartNow()
             .Build();
         var scheduler = await _factory.GetScheduler();
+        await scheduler.Start();
         await scheduler.ScheduleJob(job, trigger);
+
     }
 }

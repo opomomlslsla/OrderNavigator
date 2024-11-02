@@ -15,7 +15,7 @@ public class OrderController(
     private readonly ILogger _logger = logger;
     private readonly IValidator<OrderFilterRequest> _validator = validator;
     [HttpPost("Filter")]
-    public async Task<IActionResult> GetFilteredORders(OrderFilterRequest requestData)
+    public async Task<IActionResult> GetFilteredOrders(OrderFilterRequest requestData)
     {
         _validator.ValidateAndThrow(requestData);
         await scheduler.ScheduleOrderFilterJob(requestData);

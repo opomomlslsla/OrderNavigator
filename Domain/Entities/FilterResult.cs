@@ -21,7 +21,7 @@ public class FilterResult : BaseEntity
         sb.AppendLine("Orders: \n{");
         foreach (var item in ResultData)
         {
-            sb.AppendLine("    " + item.ToString());
+            sb.AppendLine(item.ToString());
         }
         sb.AppendLine("}");
         return sb.ToString();

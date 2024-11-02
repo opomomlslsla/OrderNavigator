@@ -1,9 +1,7 @@
 ﻿using Aplication.Helpers;
 using Aplication.Services.Options;
 using Domain.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 
 namespace Aplication.Factories;
 

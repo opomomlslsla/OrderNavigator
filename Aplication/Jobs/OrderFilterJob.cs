@@ -1,8 +1,6 @@
 ﻿using Aplication.DTO;
 using Domain.Entities;
 using Domain.Interfaces;
-using Domain.ValueObjects;
-using Mapster;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
@@ -45,5 +43,6 @@ public class OrderFilterJob(
         JobDataMap datamap = context.JobDetail.JobDataMap;
         var data = (OrderFilterRequest) datamap.Get("data");
         await FilterOrders(data);
+        _logger.LogInformation("Orders Filtered succesfully");
     }
 }
