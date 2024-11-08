@@ -9,17 +9,16 @@ public class OrderScheduler(ISchedulerFactory factory)
     public async Task ScheduleOrderFilterJob(OrderFilterRequest filterRequestData)
     {
         var jobId = Guid.NewGuid().ToString();
-        IJobDetail job = JobBuilder.Create<OrderFilterJob>()
+        var job = JobBuilder.Create<OrderFilterJob>()
             .WithIdentity(jobId)
             .UsingJobData(new() { { "data", filterRequestData } })
             .Build();
 
-        ITrigger trigger = TriggerBuilder.Create()
+        var trigger = TriggerBuilder.Create()
             .StartNow()
             .Build();
         var scheduler = await factory.GetScheduler();
         await scheduler.Start();
         await scheduler.ScheduleJob(job, trigger);
-
     }
 }
