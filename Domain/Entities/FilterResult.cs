@@ -15,7 +15,7 @@ public class FilterResult : BaseEntity
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.AppendLine($"District: {District}");
+        sb.AppendLine($"District: {District.Name}");
         sb.AppendLine($"StartTIme: {StartTime}");
         sb.AppendLine($"EndTime: {EndTime}");
         sb.AppendLine("Orders: \n{");
