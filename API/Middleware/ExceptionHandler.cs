@@ -1,9 +1,9 @@
 ﻿using System.Data.Common;
 using System.Net;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http;
 using Serilog;
 using FluentValidation;
+using ILogger = Serilog.ILogger;
 
 namespace Infrastructure.Middleware;
 
